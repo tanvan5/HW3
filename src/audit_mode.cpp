@@ -71,6 +71,7 @@ namespace audit {
                     else{
                         cout << "Invalid" << endl;
                     }
+                    break;
                 }
                 case 2: {
                     string input;
@@ -82,6 +83,7 @@ namespace audit {
                     cin >> output;
 
                     process_file(input, output);
+                    break;
 
                 }
                 case 3: {

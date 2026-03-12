@@ -11,30 +11,45 @@ namespace audit {
         char delim;
         char delim_output;
         if(input.size() > 4){
-            if(input.find(".tsv") == std::string::npos){
-                delim = '\t';
-            }
-            if(input.find(".csv") == std::string::npos){
+            if(input.find(".csv") != std::string::npos){
                 delim = ',';
             }
+            else{
+                delim = '\t';
+            }
+        }
+        else{
+            std::cout << "Error opening file";
+            return;
         }
         if(output.size() > 4){
-            if(output.find(".tsv") == std::string::npos){
-                delim_output = '\t';
-            }
-            if(output.find(".csv") == std::string::npos){
+            if(output.find(".csv") != std::string::npos){
                 delim_output = ',';
             }
+            else{
+                delim_output = '\t';
+            }
+            
+        }
+        else{
+            std::cout << "Error opening file" << std::endl;
+            return;
+        }
+
+        if(!delim || !delim_output){
+            return;
         }
 
         std::ifstream infile(input);
         std::ofstream outfile(output, std::ios::app);
 
         if (!infile.is_open()){
-            std::cerr << "infile error;";
+            std::cout << "Error opening file" << std::endl;
+            return;
         }
         if (!outfile.is_open()){
-            std::cerr << "outfile error";
+            std::cout << "Error opening file" << std::endl;
+            return;
         }
 
         string username, email, password;
@@ -63,8 +78,9 @@ namespace audit {
             switch(choice){
                 case 1: {
                     string password;
+                    std::cin.ignore();
                     cout << "Enter a single password" << endl;
-                    cin >> password;
+                    std::getline(cin, password);
                     if(validation::is_valid_password(password)){
                         cout << "Valid" << endl;
                     }
@@ -77,10 +93,10 @@ namespace audit {
                     string input;
                     string output;
                     cout << "Enter the desired input file" << endl;
-                    cin >> input;
+                    std::getline(cin >> std::ws, input);
 
                     cout << "Enter the desired output file" << endl;
-                    cin >> output;
+                    std::getline(cin >> std::ws, output);
 
                     process_file(input, output);
                     break;

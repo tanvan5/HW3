@@ -15,4 +15,5 @@ int main(int argc, char* argv[]) {
     else{
         audit::run_menu();
     }
+    return 0;
 }
